@@ -21,110 +21,249 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# CSS מותאם לעברית ו-RTL
+# CSS מותאם לעברית ו-RTL - עיצוב טבעי/חקלאי
 st.markdown("""
 <style>
-    /* הגדרת RTL לכל האפליקציה */
+    /* ייבוא גופן */
+    @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&display=swap');
+
+    /* רקע כללי - גרדיאנט טבעי */
+    .stApp {
+        background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 25%, #fff8e1 50%, #f1f8e9 75%, #e8f5e9 100%);
+        background-attachment: fixed;
+    }
+
+    /* הגדרת RTL ופונט לכל האפליקציה */
     .main, .block-container {
         direction: rtl;
         text-align: right;
     }
 
-    /* פונט עברי */
+    /* פונט Calibri */
     * {
-        font-family: 'Segoe UI', 'Arial', 'Helvetica', sans-serif !important;
+        font-family: 'Calibri', 'Assistant', 'Arial', sans-serif !important;
     }
 
     /* כותרות */
     h1, h2, h3, h4, h5, h6 {
         direction: rtl;
         text-align: right;
+        color: #2e7d32 !important;
+        font-weight: 700 !important;
+    }
+
+    h1 {
+        background: linear-gradient(90deg, #1b5e20, #4caf50, #81c784);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: 2.5rem !important;
     }
 
     /* טבלאות */
     .dataframe {
         direction: rtl;
+        background-color: rgba(255, 255, 255, 0.9) !important;
+        border-radius: 10px;
     }
 
-    /* כפתורים */
+    /* כפתורים - סגנון טבעי */
     .stButton > button {
         width: 100%;
         direction: rtl;
+        background: linear-gradient(135deg, #4caf50 0%, #81c784 100%) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 25px !important;
+        padding: 10px 25px !important;
+        font-weight: 600 !important;
+        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3) !important;
+        transition: all 0.3s ease !important;
+    }
+
+    .stButton > button:hover {
+        background: linear-gradient(135deg, #388e3c 0%, #66bb6a 100%) !important;
+        box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4) !important;
+        transform: translateY(-2px) !important;
     }
 
     /* כפתור שמירה ירוק גדול */
     .big-save-button > button {
-        background-color: #28a745 !important;
+        background: linear-gradient(135deg, #2e7d32 0%, #4caf50 50%, #81c784 100%) !important;
         color: white !important;
         font-size: 24px !important;
         padding: 20px 40px !important;
-        border-radius: 10px !important;
+        border-radius: 30px !important;
         border: none !important;
         width: 100% !important;
         margin-top: 20px !important;
+        box-shadow: 0 8px 25px rgba(46, 125, 50, 0.4) !important;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2) !important;
     }
 
     .big-save-button > button:hover {
-        background-color: #218838 !important;
+        background: linear-gradient(135deg, #1b5e20 0%, #388e3c 50%, #66bb6a 100%) !important;
+        box-shadow: 0 10px 30px rgba(46, 125, 50, 0.5) !important;
+        transform: translateY(-3px) !important;
     }
 
-    /* קלטים */
+    /* קלטים - סגנון טבעי */
     .stSelectbox, .stNumberInput, .stDateInput {
         direction: rtl;
+    }
+
+    .stSelectbox > div > div,
+    .stNumberInput > div > div > input,
+    .stDateInput > div > div > input {
+        background-color: rgba(255, 255, 255, 0.95) !important;
+        border: 2px solid #a5d6a7 !important;
+        border-radius: 15px !important;
+        padding: 10px !important;
+    }
+
+    .stSelectbox > div > div:focus-within,
+    .stNumberInput > div > div > input:focus,
+    .stDateInput > div > div > input:focus {
+        border-color: #4caf50 !important;
+        box-shadow: 0 0 10px rgba(76, 175, 80, 0.3) !important;
     }
 
     /* מטריקות */
     [data-testid="stMetricValue"] {
         direction: ltr;
+        color: #2e7d32 !important;
+        font-weight: 700 !important;
     }
 
-    /* Tabs */
+    [data-testid="stMetricLabel"] {
+        color: #558b2f !important;
+    }
+
+    /* Tabs - סגנון טבעי */
     .stTabs [data-baseweb="tab-list"] {
         direction: rtl;
         gap: 8px;
+        background-color: rgba(255, 255, 255, 0.7);
+        border-radius: 20px;
+        padding: 5px;
     }
 
     .stTabs [data-baseweb="tab"] {
         direction: rtl;
+        background-color: transparent !important;
+        border-radius: 15px !important;
+        color: #2e7d32 !important;
+        font-weight: 600 !important;
+    }
+
+    .stTabs [data-baseweb="tab"][aria-selected="true"] {
+        background: linear-gradient(135deg, #4caf50, #81c784) !important;
+        color: white !important;
     }
 
     /* הודעות הצלחה */
     .success-message {
-        background-color: #d4edda;
-        border: 1px solid #c3e6cb;
-        color: #155724;
-        padding: 20px;
-        border-radius: 10px;
+        background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%);
+        border: 2px solid #4caf50;
+        color: #1b5e20;
+        padding: 25px;
+        border-radius: 20px;
         text-align: center;
-        font-size: 20px;
+        font-size: 22px;
+        font-weight: 600;
         margin: 20px 0;
+        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.2);
     }
 
     /* כרטיסי מטריקה */
     .metric-card {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #4caf50 0%, #81c784 100%);
         padding: 20px;
-        border-radius: 15px;
+        border-radius: 20px;
         color: white;
         text-align: center;
         margin: 10px 0;
+        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
     }
 
     /* פס התקדמות */
     .progress-container {
-        background-color: #e9ecef;
-        border-radius: 10px;
-        padding: 3px;
+        background-color: rgba(200, 230, 201, 0.5);
+        border-radius: 15px;
+        padding: 4px;
         margin: 10px 0;
+        box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
     }
 
     .progress-bar {
-        height: 25px;
-        border-radius: 8px;
+        height: 28px;
+        border-radius: 12px;
         text-align: center;
-        line-height: 25px;
+        line-height: 28px;
         color: white;
         font-weight: bold;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    /* קווים מפרידים */
+    hr {
+        border: none;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #a5d6a7, #4caf50, #a5d6a7, transparent);
+        margin: 25px 0;
+    }
+
+    /* הודעות מערכת */
+    .stAlert {
+        border-radius: 15px !important;
+        border: none !important;
+    }
+
+    /* Info boxes */
+    [data-testid="stAlert"] {
+        background-color: rgba(255, 255, 255, 0.9) !important;
+        border-radius: 15px !important;
+        border-right: 4px solid #4caf50 !important;
+    }
+
+    /* Data editor */
+    [data-testid="stDataFrame"] {
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        padding: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    /* Warning boxes */
+    .stWarning {
+        background: linear-gradient(135deg, #fff3e0, #ffe0b2) !important;
+        border-right: 4px solid #ff9800 !important;
+        border-radius: 15px !important;
+    }
+
+    /* Footer */
+    footer {
+        background-color: transparent !important;
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #e8f5e9;
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, #81c784, #4caf50);
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(135deg, #66bb6a, #388e3c);
     }
 </style>
 """, unsafe_allow_html=True)
