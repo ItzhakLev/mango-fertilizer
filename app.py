@@ -575,7 +575,8 @@ def check_connection():
 
         spreadsheet = get_spreadsheet()
         return spreadsheet is not None
-    except:
+    except Exception as e:
+        st.error(f"שגיאת חיבור: {e}")
         return False
 
 
@@ -631,8 +632,28 @@ else:
             elif has_toml:
                 credentials_dict = dict(st.secrets["gcp_service_account"])
                 st.write(f"TOML keys: {list(credentials_dict.keys())}")
+
+                # ניסיון חיבור בפועל
+                st.write("---")
+                st.write("מנסה להתחבר...")
+
+                scopes = [
+                    'https://www.googleapis.com/auth/spreadsheets',
+                    'https://www.googleapis.com/auth/drive'
+                ]
+
+                credentials = Credentials.from_service_account_info(credentials_dict, scopes=scopes)
+                st.write("✅ Credentials נוצרו בהצלחה")
+
+                client = gspread.authorize(credentials)
+                st.write("✅ Client אושר בהצלחה")
+
+                spreadsheet_url = st.secrets["spreadsheet_url"]
+                spreadsheet = client.open_by_url(spreadsheet_url)
+                st.write(f"✅ גיליון נפתח: {spreadsheet.title}")
+
         except Exception as e:
-            st.error(f"Error parsing credentials: {e}")
+            st.error(f"❌ שגיאה: {e}")
 
     st.error("""
     ## הגדרת Google Sheets
