@@ -89,82 +89,124 @@ st.markdown("""
         transform: translateY(-2px) !important;
     }
 
-    .big-save-button > button {
-        background: linear-gradient(135deg, #2e7d32 0%, #4caf50 50%, #81c784 100%) !important;
-        color: white !important;
-        font-size: 24px !important;
-        padding: 20px 40px !important;
-        border-radius: 30px !important;
-        border: none !important;
-        width: 100% !important;
-        margin-top: 20px !important;
-        box-shadow: 0 8px 25px rgba(46, 125, 50, 0.4) !important;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.2) !important;
+    /* תא סיסמה */
+    .stTextInput > div > div > input {
+        background-color: #f5efe8 !important;
+        border: 2px solid #4caf50 !important;
+        border-radius: 12px !important;
+        padding: 12px 15px !important;
+        color: #1a1a1a !important;
+        font-size: 16px !important;
+        -webkit-text-fill-color: #1a1a1a !important;
     }
 
-    .big-save-button > button:hover {
-        background: linear-gradient(135deg, #1b5e20 0%, #388e3c 50%, #66bb6a 100%) !important;
-        box-shadow: 0 10px 30px rgba(46, 125, 50, 0.5) !important;
-        transform: translateY(-3px) !important;
-    }
-
-    .delete-button > button {
-        background: linear-gradient(135deg, #d32f2f 0%, #f44336 100%) !important;
-    }
-
-    .delete-button > button:hover {
-        background: linear-gradient(135deg, #b71c1c 0%, #d32f2f 100%) !important;
-    }
+    /* ===========================================
+       עיצוב תאי קלט - תאריך, חלקה, דשן, כמות
+       רקע בהיר (#f5efe8), טקסט כהה, מסגרת ירוקה
+       =========================================== */
 
     .stSelectbox, .stNumberInput, .stDateInput {
         direction: rtl;
     }
 
-    .stNumberInput > div > div > input,
-    .stDateInput > div > div > input {
-        background-color: #dbbba6 !important;
-        border: 1px solid #000000 !important;
-        border-radius: 10px !important;
-        padding: 10px !important;
-        color: #000000 !important;
+    /* תווית מעל התא */
+    .stSelectbox label,
+    .stNumberInput label,
+    .stDateInput label {
+        color: #2e7d32 !important;
+        font-weight: 600 !important;
+        font-size: 16px !important;
     }
 
-    /* עיצוב תאי בחירה - רקע בז', מסגרת שחורה, טקסט שחור */
+    /* תא קלט מספרי ותאריך */
+    .stNumberInput > div > div > input,
+    .stDateInput > div > div > input {
+        background-color: #f5efe8 !important;
+        border: 2px solid #4caf50 !important;
+        border-radius: 12px !important;
+        padding: 12px 15px !important;
+        color: #1a1a1a !important;
+        font-size: 16px !important;
+        font-weight: 500 !important;
+        -webkit-text-fill-color: #1a1a1a !important;
+    }
+
+    /* כפתורי +/- בתא מספרי */
+    .stNumberInput button {
+        background-color: #4caf50 !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 8px !important;
+    }
+
+    .stNumberInput button:hover {
+        background-color: #388e3c !important;
+    }
+
+    /* תא בחירה (Selectbox) */
+    .stSelectbox > div > div {
+        background-color: #f5efe8 !important;
+        border: 2px solid #4caf50 !important;
+        border-radius: 12px !important;
+    }
+
     .stSelectbox [data-baseweb="select"] {
-        background-color: #dbbba6 !important;
-        border: 1px solid #000000 !important;
-        border-radius: 10px !important;
+        background-color: #f5efe8 !important;
+    }
+
+    .stSelectbox [data-baseweb="select"] > div {
+        background-color: #f5efe8 !important;
+        color: #1a1a1a !important;
+        padding: 8px 12px !important;
     }
 
     .stSelectbox [data-baseweb="select"] * {
-        color: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
+        color: #1a1a1a !important;
+        -webkit-text-fill-color: #1a1a1a !important;
+        font-weight: 500 !important;
     }
 
     .stSelectbox svg {
-        fill: #000000 !important;
+        fill: #2e7d32 !important;
     }
 
-    /* אפשרויות ברשימה הנפתחת */
+    /* רשימה נפתחת */
+    [data-baseweb="popover"],
+    [data-baseweb="menu"],
+    [role="listbox"] {
+        background-color: #f5efe8 !important;
+        border: 2px solid #4caf50 !important;
+        border-radius: 12px !important;
+    }
+
     [data-baseweb="popover"] [role="option"],
     [data-baseweb="menu"] [role="option"],
-    [role="listbox"] [role="option"] {
-        color: #000000 !important;
-        background-color: #dbbba6 !important;
+    [role="listbox"] [role="option"],
+    [data-baseweb="popover"] li,
+    [data-baseweb="menu"] li,
+    [role="listbox"] li {
+        color: #1a1a1a !important;
+        background-color: #f5efe8 !important;
+        padding: 12px 15px !important;
+        font-weight: 500 !important;
     }
 
     [data-baseweb="popover"] [role="option"]:hover,
     [data-baseweb="menu"] [role="option"]:hover,
-    [role="listbox"] [role="option"]:hover {
-        background-color: #c9a88f !important;
+    [role="listbox"] [role="option"]:hover,
+    [data-baseweb="popover"] li:hover,
+    [data-baseweb="menu"] li:hover,
+    [role="listbox"] li:hover {
+        background-color: #e8f5e9 !important;
     }
 
-
+    /* מצב פוקוס */
     .stSelectbox > div > div:focus-within,
     .stNumberInput > div > div > input:focus,
     .stDateInput > div > div > input:focus {
-        border-color: #000000 !important;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3) !important;
+        border-color: #2e7d32 !important;
+        box-shadow: 0 0 8px rgba(76, 175, 80, 0.4) !important;
+        outline: none !important;
     }
 
     [data-testid="stMetricValue"] {
@@ -290,42 +332,88 @@ st.markdown("""
 
         /* כפתורים גדולים יותר למובייל */
         .stButton > button {
-            min-height: 50px !important;
-            font-size: 18px !important;
-            padding: 15px 20px !important;
+            min-height: 60px !important;
+            font-size: 20px !important;
+            padding: 18px 25px !important;
             touch-action: manipulation !important;
+            -webkit-tap-highlight-color: rgba(0,0,0,0.1) !important;
+            cursor: pointer !important;
+            transform: none !important;
         }
+
+        .stButton > button:hover {
+            transform: none !important;
+        }
+
+        .stButton > button:active {
+            background: linear-gradient(135deg, #1b5e20 0%, #388e3c 100%) !important;
+            transform: scale(0.98) !important;
+        }
+
+        /* ===========================================
+           תאי קלט במובייל - גדולים ונגישים
+           =========================================== */
 
         /* Number input - כפתורי +/- גדולים יותר */
         .stNumberInput button {
-            min-width: 44px !important;
-            min-height: 44px !important;
-            touch-action: manipulation !important;
-        }
-
-        .stNumberInput input {
-            min-height: 44px !important;
-            font-size: 18px !important;
-        }
-
-        /* Selectbox גדול יותר */
-        .stSelectbox > div > div {
+            min-width: 50px !important;
             min-height: 50px !important;
+            touch-action: manipulation !important;
+            font-size: 24px !important;
         }
 
-        /* צבע רקע בהיר לתאי קלט במובייל */
+        .stNumberInput > div > div > input {
+            min-height: 50px !important;
+            font-size: 18px !important;
+            background-color: #f5efe8 !important;
+            color: #1a1a1a !important;
+            -webkit-text-fill-color: #1a1a1a !important;
+        }
+
+        /* Selectbox במובייל */
+        .stSelectbox > div > div {
+            min-height: 55px !important;
+            background-color: #f5efe8 !important;
+        }
+
         .stSelectbox [data-baseweb="select"],
-        .stNumberInput > div > div > input,
-        .stDateInput > div > div > input {
-            background-color: #dbbba6 !important;
-            color: #000000 !important;
-            -webkit-text-fill-color: #000000 !important;
+        .stSelectbox [data-baseweb="select"] > div {
+            min-height: 50px !important;
+            background-color: #f5efe8 !important;
+            color: #1a1a1a !important;
+            -webkit-text-fill-color: #1a1a1a !important;
         }
 
         .stSelectbox [data-baseweb="select"] * {
-            background-color: transparent !important;
-            color: #000000 !important;
-            -webkit-text-fill-color: #000000 !important;
+            color: #1a1a1a !important;
+            -webkit-text-fill-color: #1a1a1a !important;
+            font-size: 16px !important;
+        }
+
+        /* תאריך במובייל */
+        .stDateInput > div > div > input {
+            min-height: 50px !important;
+            font-size: 18px !important;
+            background-color: #f5efe8 !important;
+            color: #1a1a1a !important;
+            -webkit-text-fill-color: #1a1a1a !important;
+        }
+
+        /* תוויות במובייל */
+        .stSelectbox label,
+        .stNumberInput label,
+        .stDateInput label,
+        .stTextInput label {
+            font-size: 14px !important;
+        }
+
+        /* תא סיסמה במובייל */
+        .stTextInput > div > div > input {
+            min-height: 50px !important;
+            font-size: 18px !important;
+            background-color: #f5efe8 !important;
+            color: #1a1a1a !important;
+            -webkit-text-fill-color: #1a1a1a !important;
         }
     }
 
@@ -818,8 +906,6 @@ with tab1:
                 </div>
                 """, unsafe_allow_html=True)
 
-            st.markdown("<br>", unsafe_allow_html=True)
-
             save_clicked = st.button("💾 שמור דיווח", use_container_width=True, type="primary")
 
             if save_clicked:
@@ -873,8 +959,13 @@ with tab2:
 
         st.markdown("---")
 
-        plot_info = plots_df[plots_df['plot_name'] == selected_plot_dashboard].iloc[0]
-        plot_size = max(plot_info['size_dunam'], 0.01)  # מניעת חילוק באפס
+        plot_match = plots_df[plots_df['plot_name'] == selected_plot_dashboard]
+        if plot_match.empty:
+            st.error("❌ חלקה לא נמצאה")
+            st.stop()
+
+        plot_info = plot_match.iloc[0]
+        plot_size = max(float(plot_info['size_dunam']), 0.01)  # מניעת חילוק באפס
 
         plot_logs = logs_df[logs_df['plot_name'] == selected_plot_dashboard].copy() if not logs_df.empty else pd.DataFrame()
 
@@ -959,14 +1050,24 @@ with tab2:
                     else:
                         bar_color = "#ffa726"
 
-                    bar_width = min(max(pct, 8), 100)  # מינימום 8% לתצוגת טקסט
-                    st.markdown(f"""
-                    <div class="progress-container">
-                        <div class="progress-bar" style="width: {bar_width}%; background-color: {bar_color};">
-                            {pct:.0f}%
+                    bar_width = min(max(pct, 0), 100)
+                    # הצגת האחוז מחוץ לבר אם קטן מדי
+                    if pct < 15:
+                        st.markdown(f"""
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: {max(bar_width, 3)}%; background-color: {bar_color};">
+                            </div>
                         </div>
-                    </div>
-                    """, unsafe_allow_html=True)
+                        <div style="text-align: center; font-weight: bold; color: {bar_color}; margin-top: -5px;">{pct:.0f}%</div>
+                        """, unsafe_allow_html=True)
+                    else:
+                        st.markdown(f"""
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: {bar_width}%; background-color: {bar_color};">
+                                {pct:.0f}%
+                            </div>
+                        </div>
+                        """, unsafe_allow_html=True)
 
             st.markdown("---")
 
@@ -1141,13 +1242,11 @@ with tab3:
 
             with col3:
                 if st.session_state.delete_confirm == delete_id:
-                    st.markdown('<div class="delete-button">', unsafe_allow_html=True)
-                    if st.button("⚠️ אישור מחיקה", key="confirm_delete"):
+                    if st.button("⚠️ אישור מחיקה", key="confirm_delete", type="primary"):
                         if delete_log_entry(delete_id):
                             st.success(f"✅ רשומה {delete_id} נמחקה!")
                             st.session_state.delete_confirm = None
                             st.rerun()
-                    st.markdown('</div>', unsafe_allow_html=True)
 
             # ניקוי מצב אישור מחיקה אם ה-ID השתנה
             if st.session_state.delete_confirm and st.session_state.delete_confirm != delete_id:
