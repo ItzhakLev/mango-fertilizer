@@ -127,6 +127,30 @@ st.markdown("""
         border: 2px solid #a5d6a7 !important;
         border-radius: 15px !important;
         padding: 10px !important;
+        color: #1a1a1a !important;
+    }
+
+    /* טקסט בתוך ה-dropdown */
+    .stSelectbox > div > div > div,
+    .stSelectbox [data-baseweb="select"] > div,
+    .stSelectbox input,
+    .stSelectbox span {
+        color: #1a1a1a !important;
+        font-family: 'Calibri', 'Assistant', 'Arial', sans-serif !important;
+    }
+
+    /* אפשרויות ב-dropdown */
+    [data-baseweb="popover"] li,
+    [data-baseweb="menu"] li,
+    [role="listbox"] li {
+        color: #1a1a1a !important;
+        background-color: white !important;
+    }
+
+    [data-baseweb="popover"] li:hover,
+    [data-baseweb="menu"] li:hover,
+    [role="listbox"] li:hover {
+        background-color: #e8f5e9 !important;
     }
 
     .stSelectbox > div > div:focus-within,
@@ -292,8 +316,7 @@ if 'delete_confirm' not in st.session_state:
     st.session_state.delete_confirm = None
 if 'form_key' not in st.session_state:
     st.session_state.form_key = 0
-if 'gsheet_client' not in st.session_state:
-    st.session_state.gsheet_client = None
+# הערה: החיבור ל-Google Sheets מנוהל דרך @st.cache_resource
 
 # =============================================================================
 # פונקציות Google Sheets
@@ -359,11 +382,11 @@ def init_sheets():
         try:
             plots_sheet = spreadsheet.worksheet("plots")
             if plots_sheet.row_count <= 1:
-                raise Exception("Empty sheet")
-        except:
+                raise gspread.exceptions.WorksheetNotFound("Empty sheet")
+        except gspread.exceptions.WorksheetNotFound:
             try:
                 plots_sheet = spreadsheet.add_worksheet(title="plots", rows=100, cols=10)
-            except:
+            except gspread.exceptions.APIError:
                 plots_sheet = spreadsheet.worksheet("plots")
 
             plots_data = [
@@ -379,11 +402,11 @@ def init_sheets():
         try:
             ferts_sheet = spreadsheet.worksheet("fertilizers")
             if ferts_sheet.row_count <= 1:
-                raise Exception("Empty sheet")
-        except:
+                raise gspread.exceptions.WorksheetNotFound("Empty sheet")
+        except gspread.exceptions.WorksheetNotFound:
             try:
                 ferts_sheet = spreadsheet.add_worksheet(title="fertilizers", rows=100, cols=10)
-            except:
+            except gspread.exceptions.APIError:
                 ferts_sheet = spreadsheet.worksheet("fertilizers")
 
             ferts_data = [
@@ -400,7 +423,7 @@ def init_sheets():
         # בדיקה ויצירת גיליון יומן
         try:
             logs_sheet = spreadsheet.worksheet("logs")
-        except:
+        except gspread.exceptions.WorksheetNotFound:
             logs_sheet = spreadsheet.add_worksheet(title="logs", rows=1000, cols=10)
             logs_data = [['log_id', 'date', 'plot_name', 'fert_name', 'amount_kg', 'created_at']]
             logs_sheet.update('A1', logs_data)
@@ -456,7 +479,10 @@ def load_logs():
         df = pd.DataFrame(data)
 
         if not df.empty and 'date' in df.columns:
-            df['date'] = pd.to_datetime(df['date']).dt.date
+            try:
+                df['date'] = pd.to_datetime(df['date'], errors='coerce').dt.date
+            except Exception:
+                pass  # שמירה על הפורמט המקורי אם ההמרה נכשלת
 
         return df
     except Exception as e:
@@ -634,7 +660,73 @@ with tab1:
         st.error("❌ חסרים נתוני חלקות או דשנים. פנה למנהל להוספת נתונים.")
     else:
         if st.session_state.form_submitted:
-            st.balloons()
+            # אנימציית פירות וירקות חקלאיים
+            st.markdown("""
+            <style>
+            @keyframes fall {
+                0% {
+                    transform: translateY(-100vh) rotate(0deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(100vh) rotate(720deg);
+                    opacity: 0;
+                }
+            }
+
+            @keyframes sway {
+                0%, 100% {
+                    transform: translateX(0);
+                }
+                50% {
+                    transform: translateX(30px);
+                }
+            }
+
+            .harvest-animation {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 9999;
+                overflow: hidden;
+                animation: fadeOut 0.5s ease-out 4s forwards;
+            }
+
+            @keyframes fadeOut {
+                from { opacity: 1; }
+                to { opacity: 0; visibility: hidden; }
+            }
+
+            .fruit {
+                position: absolute;
+                font-size: 2.5rem;
+                animation: fall linear forwards, sway ease-in-out infinite;
+                animation-duration: 4s, 2s;
+            }
+            </style>
+
+            <div class="harvest-animation">
+                <span class="fruit" style="left: 5%; animation-delay: 0s;">🥭</span>
+                <span class="fruit" style="left: 15%; animation-delay: 0.3s;">🍊</span>
+                <span class="fruit" style="left: 25%; animation-delay: 0.1s;">🌽</span>
+                <span class="fruit" style="left: 35%; animation-delay: 0.5s;">🍇</span>
+                <span class="fruit" style="left: 45%; animation-delay: 0.2s;">🥑</span>
+                <span class="fruit" style="left: 55%; animation-delay: 0.4s;">🍋</span>
+                <span class="fruit" style="left: 65%; animation-delay: 0.15s;">🌿</span>
+                <span class="fruit" style="left: 75%; animation-delay: 0.35s;">🍎</span>
+                <span class="fruit" style="left: 85%; animation-delay: 0.25s;">🥕</span>
+                <span class="fruit" style="left: 95%; animation-delay: 0.45s;">🌱</span>
+                <span class="fruit" style="left: 10%; animation-delay: 0.6s;">🥭</span>
+                <span class="fruit" style="left: 30%; animation-delay: 0.7s;">🍈</span>
+                <span class="fruit" style="left: 50%; animation-delay: 0.55s;">🫒</span>
+                <span class="fruit" style="left: 70%; animation-delay: 0.8s;">🍑</span>
+                <span class="fruit" style="left: 90%; animation-delay: 0.65s;">🥬</span>
+            </div>
+            """, unsafe_allow_html=True)
+
             st.markdown("""
             <div class="success-message">
                 ✅ הדיווח נשמר בהצלחה!
@@ -682,15 +774,17 @@ with tab1:
                     key=f"amount_{st.session_state.form_key}"
                 )
 
-            selected_fert_info = ferts_df[ferts_df['fert_name'] == selected_fert].iloc[0]
-            st.markdown(f"""
-            <div style="background: rgba(255,255,255,0.8); padding: 10px; border-radius: 10px; margin: 10px 0;">
-                <strong>הרכב הדשן:</strong> N: {selected_fert_info['n_percent']}% |
-                P: {selected_fert_info['p_percent']}% |
-                K: {selected_fert_info['k_percent']}% |
-                C: {selected_fert_info['c_percent']}%
-            </div>
-            """, unsafe_allow_html=True)
+            fert_match = ferts_df[ferts_df['fert_name'] == selected_fert]
+            if not fert_match.empty:
+                selected_fert_info = fert_match.iloc[0]
+                st.markdown(f"""
+                <div style="background: rgba(255,255,255,0.8); padding: 10px; border-radius: 10px; margin: 10px 0;">
+                    <strong>הרכב הדשן:</strong> N: {selected_fert_info['n_percent']}% |
+                    P: {selected_fert_info['p_percent']}% |
+                    K: {selected_fert_info['k_percent']}% |
+                    C: {selected_fert_info['c_percent']}%
+                </div>
+                """, unsafe_allow_html=True)
 
             st.markdown("<br>", unsafe_allow_html=True)
 
@@ -750,7 +844,7 @@ with tab2:
         st.markdown("---")
 
         plot_info = plots_df[plots_df['plot_name'] == selected_plot_dashboard].iloc[0]
-        plot_size = plot_info['size_dunam']
+        plot_size = max(plot_info['size_dunam'], 0.01)  # מניעת חילוק באפס
 
         plot_logs = logs_df[logs_df['plot_name'] == selected_plot_dashboard].copy() if not logs_df.empty else pd.DataFrame()
 
@@ -775,6 +869,11 @@ with tab2:
                 st.metric("פחמן (C)", f"{plot_info['target_c']:.1f} ק\"ג")
         else:
             merged = plot_logs.merge(ferts_df, left_on='fert_name', right_on='fert_name', how='left')
+
+            # מילוי ערכי NaN באפסים (למקרה שדשן לא נמצא)
+            for col in ['n_percent', 'p_percent', 'k_percent', 'c_percent']:
+                if col in merged.columns:
+                    merged[col] = merged[col].fillna(0)
 
             merged['actual_n'] = merged['amount_kg'] * (merged['n_percent'] / 100)
             merged['actual_p'] = merged['amount_kg'] * (merged['p_percent'] / 100)
@@ -830,7 +929,7 @@ with tab2:
                     else:
                         bar_color = "#ffa726"
 
-                    bar_width = min(pct, 100)
+                    bar_width = min(max(pct, 8), 100)  # מינימום 8% לתצוגת טקסט
                     st.markdown(f"""
                     <div class="progress-container">
                         <div class="progress-bar" style="width: {bar_width}%; background-color: {bar_color};">
@@ -1019,6 +1118,10 @@ with tab3:
                             st.session_state.delete_confirm = None
                             st.rerun()
                     st.markdown('</div>', unsafe_allow_html=True)
+
+            # ניקוי מצב אישור מחיקה אם ה-ID השתנה
+            if st.session_state.delete_confirm and st.session_state.delete_confirm != delete_id:
+                st.session_state.delete_confirm = None
 
             if st.session_state.delete_confirm:
                 st.warning(f"⚠️ האם אתה בטוח שברצונך למחוק רשומה {st.session_state.delete_confirm}?")
