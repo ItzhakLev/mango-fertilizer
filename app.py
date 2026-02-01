@@ -130,13 +130,20 @@ st.markdown("""
         color: #1a1a1a !important;
     }
 
-    /* טקסט בתוך ה-dropdown */
+    /* טקסט בתוך ה-dropdown - הערך הנבחר */
     .stSelectbox > div > div > div,
     .stSelectbox [data-baseweb="select"] > div,
+    .stSelectbox [data-baseweb="select"] span,
+    .stSelectbox [data-baseweb="select"] div[class*="valueContainer"],
+    .stSelectbox [data-baseweb="select"] div[class*="singleValue"],
     .stSelectbox input,
-    .stSelectbox span {
+    .stSelectbox span,
+    [data-baseweb="select"] [data-testid="stMarkdownContainer"],
+    [data-baseweb="select"] div[aria-selected="true"],
+    div[data-baseweb="select"] > div > div {
         color: #1a1a1a !important;
         font-family: 'Calibri', 'Assistant', 'Arial', sans-serif !important;
+        -webkit-text-fill-color: #1a1a1a !important;
     }
 
     /* אפשרויות ב-dropdown */
@@ -665,21 +672,12 @@ with tab1:
             <style>
             @keyframes fall {
                 0% {
-                    transform: translateY(-100vh) rotate(0deg);
+                    top: -50px;
                     opacity: 1;
                 }
                 100% {
-                    transform: translateY(100vh) rotate(720deg);
-                    opacity: 0;
-                }
-            }
-
-            @keyframes sway {
-                0%, 100% {
-                    transform: translateX(0);
-                }
-                50% {
-                    transform: translateX(30px);
+                    top: 100vh;
+                    opacity: 0.7;
                 }
             }
 
@@ -692,38 +690,31 @@ with tab1:
                 pointer-events: none;
                 z-index: 9999;
                 overflow: hidden;
-                animation: fadeOut 0.5s ease-out 4s forwards;
-            }
-
-            @keyframes fadeOut {
-                from { opacity: 1; }
-                to { opacity: 0; visibility: hidden; }
             }
 
             .fruit {
                 position: absolute;
                 font-size: 2.5rem;
-                animation: fall linear forwards, sway ease-in-out infinite;
-                animation-duration: 4s, 2s;
+                animation: fall 3.5s ease-in forwards;
             }
             </style>
 
             <div class="harvest-animation">
                 <span class="fruit" style="left: 5%; animation-delay: 0s;">🥭</span>
-                <span class="fruit" style="left: 15%; animation-delay: 0.3s;">🍊</span>
-                <span class="fruit" style="left: 25%; animation-delay: 0.1s;">🌽</span>
-                <span class="fruit" style="left: 35%; animation-delay: 0.5s;">🍇</span>
-                <span class="fruit" style="left: 45%; animation-delay: 0.2s;">🥑</span>
-                <span class="fruit" style="left: 55%; animation-delay: 0.4s;">🍋</span>
+                <span class="fruit" style="left: 15%; animation-delay: 0.2s;">🍊</span>
+                <span class="fruit" style="left: 25%; animation-delay: 0.4s;">🌽</span>
+                <span class="fruit" style="left: 35%; animation-delay: 0.1s;">🍇</span>
+                <span class="fruit" style="left: 45%; animation-delay: 0.3s;">🥑</span>
+                <span class="fruit" style="left: 55%; animation-delay: 0.5s;">🍋</span>
                 <span class="fruit" style="left: 65%; animation-delay: 0.15s;">🌿</span>
                 <span class="fruit" style="left: 75%; animation-delay: 0.35s;">🍎</span>
                 <span class="fruit" style="left: 85%; animation-delay: 0.25s;">🥕</span>
                 <span class="fruit" style="left: 95%; animation-delay: 0.45s;">🌱</span>
-                <span class="fruit" style="left: 10%; animation-delay: 0.6s;">🥭</span>
-                <span class="fruit" style="left: 30%; animation-delay: 0.7s;">🍈</span>
-                <span class="fruit" style="left: 50%; animation-delay: 0.55s;">🫒</span>
-                <span class="fruit" style="left: 70%; animation-delay: 0.8s;">🍑</span>
-                <span class="fruit" style="left: 90%; animation-delay: 0.65s;">🥬</span>
+                <span class="fruit" style="left: 8%; animation-delay: 0.6s;">🥭</span>
+                <span class="fruit" style="left: 28%; animation-delay: 0.7s;">🍈</span>
+                <span class="fruit" style="left: 48%; animation-delay: 0.55s;">🫒</span>
+                <span class="fruit" style="left: 68%; animation-delay: 0.8s;">🍑</span>
+                <span class="fruit" style="left: 88%; animation-delay: 0.65s;">🥬</span>
             </div>
             """, unsafe_allow_html=True)
 
