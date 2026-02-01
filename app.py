@@ -304,7 +304,17 @@ def get_google_client():
     """יצירת חיבור ל-Google Sheets"""
     try:
         # קריאת credentials מ-Streamlit Secrets
-        credentials_dict = st.secrets["gcp_service_account"]
+        # תומך בשתי שיטות: JSON כמחרוזת או כ-TOML section
+
+        if "gcp_service_account_json" in st.secrets:
+            # שיטה 1: JSON כמחרוזת (מומלץ)
+            credentials_dict = json.loads(st.secrets["gcp_service_account_json"])
+        elif "gcp_service_account" in st.secrets:
+            # שיטה 2: TOML section
+            credentials_dict = dict(st.secrets["gcp_service_account"])
+        else:
+            st.error("חסרים פרטי התחברות ל-Google Sheets")
+            return None
 
         scopes = [
             'https://www.googleapis.com/auth/spreadsheets',
@@ -557,8 +567,12 @@ def export_to_excel(df, filename):
 def check_connection():
     """בדיקה האם יש חיבור תקין"""
     try:
-        if "gcp_service_account" not in st.secrets or "spreadsheet_url" not in st.secrets:
+        has_credentials = "gcp_service_account" in st.secrets or "gcp_service_account_json" in st.secrets
+        has_url = "spreadsheet_url" in st.secrets
+
+        if not has_credentials or not has_url:
             return False
+
         spreadsheet = get_spreadsheet()
         return spreadsheet is not None
     except:
