@@ -312,6 +312,21 @@ st.markdown("""
         .stSelectbox > div > div {
             min-height: 50px !important;
         }
+
+        /* צבע רקע בהיר לתאי קלט במובייל */
+        .stSelectbox [data-baseweb="select"],
+        .stNumberInput > div > div > input,
+        .stDateInput > div > div > input {
+            background-color: #dbbba6 !important;
+            color: #000000 !important;
+            -webkit-text-fill-color: #000000 !important;
+        }
+
+        .stSelectbox [data-baseweb="select"] * {
+            background-color: transparent !important;
+            color: #000000 !important;
+            -webkit-text-fill-color: #000000 !important;
+        }
     }
 
     .connection-status {
