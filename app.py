@@ -131,19 +131,29 @@ st.markdown("""
     }
 
     /* טקסט בתוך ה-dropdown - הערך הנבחר */
-    .stSelectbox > div > div > div,
-    .stSelectbox [data-baseweb="select"] > div,
-    .stSelectbox [data-baseweb="select"] span,
-    .stSelectbox [data-baseweb="select"] div[class*="valueContainer"],
-    .stSelectbox [data-baseweb="select"] div[class*="singleValue"],
-    .stSelectbox input,
-    .stSelectbox span,
-    [data-baseweb="select"] [data-testid="stMarkdownContainer"],
-    [data-baseweb="select"] div[aria-selected="true"],
-    div[data-baseweb="select"] > div > div {
+    .stSelectbox div[data-baseweb="select"] * {
         color: #1a1a1a !important;
-        font-family: 'Calibri', 'Assistant', 'Arial', sans-serif !important;
         -webkit-text-fill-color: #1a1a1a !important;
+    }
+
+    .stSelectbox [data-baseweb="select"] > div:first-child {
+        color: #1a1a1a !important;
+        -webkit-text-fill-color: #1a1a1a !important;
+    }
+
+    .stSelectbox [data-baseweb="select"] > div:first-child > div {
+        color: #1a1a1a !important;
+        -webkit-text-fill-color: #1a1a1a !important;
+    }
+
+    /* וידוא שהטקסט נראה בכל מצב */
+    [data-testid="stSelectbox"] * {
+        color: #1a1a1a !important;
+        -webkit-text-fill-color: #1a1a1a !important;
+    }
+
+    .stSelectbox svg {
+        fill: #1a1a1a !important;
     }
 
     /* אפשרויות ב-dropdown */
