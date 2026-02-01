@@ -148,22 +148,29 @@ st.markdown("""
         background-color: #f5efe8 !important;
         border: 2px solid #4caf50 !important;
         border-radius: 12px !important;
+        min-height: 50px !important;
     }
 
     .stSelectbox [data-baseweb="select"] {
         background-color: #f5efe8 !important;
+        min-height: 46px !important;
     }
 
     .stSelectbox [data-baseweb="select"] > div {
         background-color: #f5efe8 !important;
         color: #1a1a1a !important;
-        padding: 8px 12px !important;
+        padding: 12px 15px !important;
+        min-height: 46px !important;
+        display: flex !important;
+        align-items: center !important;
     }
 
     .stSelectbox [data-baseweb="select"] * {
         color: #1a1a1a !important;
         -webkit-text-fill-color: #1a1a1a !important;
         font-weight: 500 !important;
+        font-size: 16px !important;
+        line-height: 1.4 !important;
     }
 
     .stSelectbox svg {
@@ -372,22 +379,30 @@ st.markdown("""
 
         /* Selectbox במובייל */
         .stSelectbox > div > div {
-            min-height: 55px !important;
+            min-height: 60px !important;
             background-color: #f5efe8 !important;
         }
 
-        .stSelectbox [data-baseweb="select"],
+        .stSelectbox [data-baseweb="select"] {
+            min-height: 56px !important;
+            background-color: #f5efe8 !important;
+        }
+
         .stSelectbox [data-baseweb="select"] > div {
-            min-height: 50px !important;
+            min-height: 56px !important;
             background-color: #f5efe8 !important;
             color: #1a1a1a !important;
             -webkit-text-fill-color: #1a1a1a !important;
+            padding: 15px !important;
+            display: flex !important;
+            align-items: center !important;
         }
 
         .stSelectbox [data-baseweb="select"] * {
             color: #1a1a1a !important;
             -webkit-text-fill-color: #1a1a1a !important;
-            font-size: 16px !important;
+            font-size: 18px !important;
+            line-height: 1.5 !important;
         }
 
         /* תאריך במובייל */
