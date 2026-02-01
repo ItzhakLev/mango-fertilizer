@@ -586,7 +586,18 @@ def check_connection():
 # כותרת ראשית
 st.markdown("# 🥭 ניהול דישון - מטע מנגו")
 
-# בדיקת חיבור
+# בדיקת חיבור - עם דיבוג
+debug_info = []
+
+# בדיקת secrets
+has_json = "gcp_service_account_json" in st.secrets
+has_toml = "gcp_service_account" in st.secrets
+has_url = "spreadsheet_url" in st.secrets
+
+debug_info.append(f"gcp_service_account_json exists: {has_json}")
+debug_info.append(f"gcp_service_account exists: {has_toml}")
+debug_info.append(f"spreadsheet_url exists: {has_url}")
+
 is_connected = check_connection()
 
 if is_connected:
@@ -604,6 +615,24 @@ else:
         ❌ לא מחובר ל-Google Sheets - נדרשת הגדרה
     </div>
     """, unsafe_allow_html=True)
+
+    # הצגת מידע דיבוג
+    with st.expander("🔧 מידע טכני לאבחון"):
+        for info in debug_info:
+            st.write(info)
+
+        # ניסיון חיבור עם הודעת שגיאה מפורטת
+        try:
+            if has_json:
+                test_json = st.secrets["gcp_service_account_json"]
+                st.write(f"JSON length: {len(test_json)}")
+                credentials_dict = json.loads(test_json)
+                st.write(f"JSON parsed successfully. Keys: {list(credentials_dict.keys())}")
+            elif has_toml:
+                credentials_dict = dict(st.secrets["gcp_service_account"])
+                st.write(f"TOML keys: {list(credentials_dict.keys())}")
+        except Exception as e:
+            st.error(f"Error parsing credentials: {e}")
 
     st.error("""
     ## הגדרת Google Sheets
