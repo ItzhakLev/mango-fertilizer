@@ -120,7 +120,6 @@ st.markdown("""
         direction: rtl;
     }
 
-    .stSelectbox > div > div,
     .stNumberInput > div > div > input,
     .stDateInput > div > div > input {
         background-color: rgba(255, 255, 255, 0.95) !important;
@@ -130,45 +129,35 @@ st.markdown("""
         color: #1a1a1a !important;
     }
 
-    /* טקסט בתוך ה-dropdown - הערך הנבחר */
-    .stSelectbox div[data-baseweb="select"] * {
-        color: #1a1a1a !important;
-        -webkit-text-fill-color: #1a1a1a !important;
+    /* תיקון טקסט ב-selectbox - גישה חדשה */
+    .stSelectbox [data-baseweb="select"] {
+        background-color: #2e7d32 !important;
+        border-radius: 15px !important;
     }
 
-    .stSelectbox [data-baseweb="select"] > div:first-child {
-        color: #1a1a1a !important;
-        -webkit-text-fill-color: #1a1a1a !important;
-    }
-
-    .stSelectbox [data-baseweb="select"] > div:first-child > div {
-        color: #1a1a1a !important;
-        -webkit-text-fill-color: #1a1a1a !important;
-    }
-
-    /* וידוא שהטקסט נראה בכל מצב */
-    [data-testid="stSelectbox"] * {
-        color: #1a1a1a !important;
-        -webkit-text-fill-color: #1a1a1a !important;
+    .stSelectbox [data-baseweb="select"] * {
+        color: white !important;
+        -webkit-text-fill-color: white !important;
     }
 
     .stSelectbox svg {
-        fill: #1a1a1a !important;
+        fill: white !important;
     }
 
-    /* אפשרויות ב-dropdown */
-    [data-baseweb="popover"] li,
-    [data-baseweb="menu"] li,
-    [role="listbox"] li {
+    /* אפשרויות ברשימה הנפתחת */
+    [data-baseweb="popover"] [role="option"],
+    [data-baseweb="menu"] [role="option"],
+    [role="listbox"] [role="option"] {
         color: #1a1a1a !important;
         background-color: white !important;
     }
 
-    [data-baseweb="popover"] li:hover,
-    [data-baseweb="menu"] li:hover,
-    [role="listbox"] li:hover {
+    [data-baseweb="popover"] [role="option"]:hover,
+    [data-baseweb="menu"] [role="option"]:hover,
+    [role="listbox"] [role="option"]:hover {
         background-color: #e8f5e9 !important;
     }
+
 
     .stSelectbox > div > div:focus-within,
     .stNumberInput > div > div > input:focus,
@@ -297,9 +286,30 @@ st.markdown("""
         h1 {
             font-size: 1.8rem !important;
         }
-        .big-save-button > button {
+
+        /* כפתורים גדולים יותר למובייל */
+        .stButton > button {
+            min-height: 50px !important;
             font-size: 18px !important;
             padding: 15px 20px !important;
+            touch-action: manipulation !important;
+        }
+
+        /* Number input - כפתורי +/- גדולים יותר */
+        .stNumberInput button {
+            min-width: 44px !important;
+            min-height: 44px !important;
+            touch-action: manipulation !important;
+        }
+
+        .stNumberInput input {
+            min-height: 44px !important;
+            font-size: 18px !important;
+        }
+
+        /* Selectbox גדול יותר */
+        .stSelectbox > div > div {
+            min-height: 50px !important;
         }
     }
 
@@ -333,6 +343,8 @@ if 'delete_confirm' not in st.session_state:
     st.session_state.delete_confirm = None
 if 'form_key' not in st.session_state:
     st.session_state.form_key = 0
+if 'sheets_initialized' not in st.session_state:
+    st.session_state.sheets_initialized = False
 # הערה: החיבור ל-Google Sheets מנוהל דרך @st.cache_resource
 
 # =============================================================================
@@ -373,8 +385,9 @@ def get_google_client():
         return None
 
 
+@st.cache_resource
 def get_spreadsheet():
-    """קבלת הגיליון"""
+    """קבלת הגיליון - עם cache למניעת קריאות מיותרות"""
     try:
         client = get_google_client()
         if client is None:
@@ -640,8 +653,10 @@ if is_connected:
     </div>
     """, unsafe_allow_html=True)
 
-    # אתחול גיליונות
-    init_sheets()
+    # אתחול גיליונות - רק פעם אחת לסשן
+    if not st.session_state.sheets_initialized:
+        init_sheets()
+        st.session_state.sheets_initialized = True
 else:
     st.markdown("""
     <div class="connection-status disconnected">
@@ -789,9 +804,7 @@ with tab1:
 
             st.markdown("<br>", unsafe_allow_html=True)
 
-            st.markdown('<div class="big-save-button">', unsafe_allow_html=True)
             save_clicked = st.button("💾 שמור דיווח", use_container_width=True, type="primary")
-            st.markdown('</div>', unsafe_allow_html=True)
 
             if save_clicked:
                 if amount <= 0:
