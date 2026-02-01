@@ -122,48 +122,49 @@ st.markdown("""
 
     .stNumberInput > div > div > input,
     .stDateInput > div > div > input {
-        background-color: rgba(255, 255, 255, 0.95) !important;
-        border: 2px solid #a5d6a7 !important;
-        border-radius: 15px !important;
+        background-color: #dbbba6 !important;
+        border: 1px solid #000000 !important;
+        border-radius: 10px !important;
         padding: 10px !important;
-        color: #1a1a1a !important;
+        color: #000000 !important;
     }
 
-    /* תיקון טקסט ב-selectbox - גישה חדשה */
+    /* עיצוב תאי בחירה - רקע בז', מסגרת שחורה, טקסט שחור */
     .stSelectbox [data-baseweb="select"] {
-        background-color: #2e7d32 !important;
-        border-radius: 15px !important;
+        background-color: #dbbba6 !important;
+        border: 1px solid #000000 !important;
+        border-radius: 10px !important;
     }
 
     .stSelectbox [data-baseweb="select"] * {
-        color: white !important;
-        -webkit-text-fill-color: white !important;
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
     }
 
     .stSelectbox svg {
-        fill: white !important;
+        fill: #000000 !important;
     }
 
     /* אפשרויות ברשימה הנפתחת */
     [data-baseweb="popover"] [role="option"],
     [data-baseweb="menu"] [role="option"],
     [role="listbox"] [role="option"] {
-        color: #1a1a1a !important;
-        background-color: white !important;
+        color: #000000 !important;
+        background-color: #dbbba6 !important;
     }
 
     [data-baseweb="popover"] [role="option"]:hover,
     [data-baseweb="menu"] [role="option"]:hover,
     [role="listbox"] [role="option"]:hover {
-        background-color: #e8f5e9 !important;
+        background-color: #c9a88f !important;
     }
 
 
     .stSelectbox > div > div:focus-within,
     .stNumberInput > div > div > input:focus,
     .stDateInput > div > div > input:focus {
-        border-color: #4caf50 !important;
-        box-shadow: 0 0 10px rgba(76, 175, 80, 0.3) !important;
+        border-color: #000000 !important;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3) !important;
     }
 
     [data-testid="stMetricValue"] {
